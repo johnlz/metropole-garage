@@ -1,0 +1,1356 @@
+:root {
+  --lime-green: #abff00;
+  --lime-green-light: #d2ff7f;
+  --lime-green-dark: #86cc00;
+  --dark-bg: #0a0e14;
+  --card-bg: #111820;
+  --text-primary: #ffffff;
+  --text-secondary: #a3a3a3;
+}
+
+@font-face {
+  font-family: 'Orbitron';
+  src: url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: var(--text-primary);
+  background-color: transparent;
+  overflow: hidden;
+}
+
+/* Classe para controlar o fundo escuro apenas quando a UI estiver ativa */
+body.garage-background-visible::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: invisible;
+  z-index: 1000;
+  pointer-events: none;
+}
+
+#root {
+  display: none; /* Oculto por padrão */
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  font-family: 'Rajdhani', 'Roboto', sans-serif;
+}
+
+/* Classe aplicada quando a UI deve ser visível */
+#root.visible-ui {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1001; /* Garante que a UI fique sobre o fundo escuro */
+  position: relative;
+}
+
+/* Efeitos de néon e brilho para o tema futurista */
+.neon-glow {
+  text-shadow: 0 0 5px rgba(171, 255, 0, 0.7), 
+               0 0 10px rgba(171, 255, 0, 0.5), 
+               0 0 15px rgba(171, 255, 0, 0.3);
+}
+
+.neon-border {
+  box-shadow: 0 0 5px rgba(171, 255, 0, 0.7), 
+              0 0 10px rgba(171, 255, 0, 0.5);
+  border: 1px solid rgba(171, 255, 0, 0.8) !important;
+}
+
+.futuristic-container {
+  background-color: rgba(10, 14, 20, 0.95);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(171, 255, 0, 0.3);
+  padding: 2rem;
+  max-width: 1200px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.7);
+}
+
+/* Barra de rolagem personalizada */
+.futuristic-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.futuristic-container::-webkit-scrollbar-track {
+  background: rgba(10, 14, 20, 0.5);
+  border-radius: 10px;
+}
+
+.futuristic-container::-webkit-scrollbar-thumb {
+  background: rgba(171, 255, 0, 0.7);
+  border-radius: 10px;
+}
+
+/* Estilo para os cards de veículos */
+.vehicle-card {
+  background-color: rgba(17, 25, 34, 0.9);
+  border-radius: 8px;
+  border: 1px solid rgba(171, 255, 0, 0.3);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.vehicle-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(171, 255, 0, 0.8);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3), 0 0 10px rgba(171, 255, 0, 0.4);
+}
+
+.vehicle-card.active {
+  border: 1.5px solid rgba(171, 255, 0, 1);
+  box-shadow: 0 0 15px rgba(171, 255, 0, 0.6);
+}
+
+/* Botões com estilo futurista */
+.btn-futuristic {
+  background-color: rgba(17, 25, 34, 0.95);
+  color: rgba(171, 255, 0, 1);
+  border: 1px solid rgba(171, 255, 0, 0.5);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-futuristic:hover {
+  background-color: rgba(171, 255, 0, 0.15);
+  box-shadow: 0 0 10px rgba(171, 255, 0, 0.5);
+}
+
+.btn-futuristic:active {
+  transform: scale(0.98);
+}
+
+/* Abas de navegação */
+.tab-nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(171, 255, 0, 0.3);
+  padding-bottom: 0.75rem;
+}
+
+.tab-item {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border-radius: 4px;
+  color: var(--text-secondary);
+}
+
+.tab-item.active {
+  background-color: rgba(171, 255, 0, 0.15);
+  color: rgba(171, 255, 0, 1);
+  font-weight: 600;
+  box-shadow: 0 0 8px rgba(171, 255, 0, 0.4);
+}
+
+/* Campo de busca com estilo futurista */
+.search-input {
+  background-color: rgba(10, 14, 20, 0.9);
+  border: 1px solid rgba(171, 255, 0, 0.3);
+  border-radius: 999px;
+  padding: 0.75rem 1rem;
+  color: #ffffff;
+  width: 100%;
+  transition: all 0.3s ease;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: rgba(171, 255, 0, 0.8);
+  box-shadow: 0 0 10px rgba(171, 255, 0, 0.4);
+}
+
+/* Animações para elementos na UI */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease forwards;
+}
+
+/* Efeito de overlay para veículos spawned */
+.spawned-overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: rgba(171, 255, 0, 0.9);
+  color: #0A0E14;
+  font-weight: bold;
+  padding: 0.25rem 0.75rem;
+  border-bottom-left-radius: 8px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+/* Placeholder para imagens de veículos */
+.vehicle-image-container {
+  background: linear-gradient(135deg, rgba(17, 25, 34, 0.9) 0%, rgba(10, 14, 20, 0.95) 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  position: relative;
+  overflow: hidden;
+}
+
+.vehicle-image {
+  max-width: 100%;
+  max-height: 150px;
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(171, 255, 0, 0.3));
+}
+
+.vehicle-card:hover .vehicle-image {
+  transform: scale(1.08);
+}
+
+/* Botão de fechar */
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: rgba(10, 14, 20, 0.8);
+  color: rgba(171, 255, 0, 1);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 1px solid rgba(171, 255, 0, 0.3);
+  transition: all 0.2s ease;
+}
+
+.close-button:hover {
+  background-color: rgba(171, 255, 0, 0.15);
+  box-shadow: 0 0 10px rgba(171, 255, 0, 0.5);
+}
+
+/* Header da garagem */
+.garage-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+.garage-title {
+  font-size: 2.25rem;
+  color: white;
+  font-weight: 700;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.garage-title-accent {
+  color: rgba(171, 255, 0, 1);
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.card {
+  padding: 2em;
+}
+
+.read-the-docs {
+  color: #888;
+}
+
+/* Efeito circuit-line para elementos gráficos futuristas */
+.circuit-line {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(171, 255, 0, 0.7), transparent);
+  position: relative;
+}
+
+.circuit-line::before, 
+.circuit-line::after {
+  content: '';
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--lime-green);
+  top: -2px;
+}
+
+.circuit-line::before {
+  left: 30%;
+}
+
+.circuit-line::after {
+  right: 30%;
+}
+
+/* Efeito para textos com aparência de código */
+.code-text {
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.05em;
+}
+
+/* Botões de ação para veículos */
+.vehicle-action-btn {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  z-index: 1;
+}
+
+.vehicle-action-btn::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -100%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(60deg, rgba(171, 255, 0, 0) 20%, rgba(171, 255, 0, 0.2) 50%, rgba(171, 255, 0, 0) 80%);
+  transform: rotate(45deg);
+  z-index: -1;
+  transition: all 0.5s ease;
+}
+
+.vehicle-action-btn:hover::after {
+  left: 100%;
+}
+
+.vehicle-action-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transform: skewX(-25deg);
+  transition: 0.5s;
+  z-index: 1;
+}
+
+.vehicle-action-btn:hover::before {
+  left: 100%;
+}
+
+/* Dashboard de estatísticas do veículo */
+.vehicle-stats {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.stat-item {
+  background-color: rgba(10, 14, 20, 0.6);
+  border: 1px solid rgba(171, 255, 0, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+
+.stat-icon {
+  color: var(--lime-green);
+  margin-right: 0.25rem;
+}
+
+/* App.css - Estilos específicos para o componente App */
+
+/* Animação para o efeito de "escaneamento" futurista */
+@keyframes scanning {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%;
+  }
+}
+
+/* Container principal com efeito de grade futurista - REMOVIDO O BACKGROUND POR PADRÃO */
+.app-container {
+  /* Substituído a cor de fundo fixa por transparente */
+  background-color: transparent;
+  /* Movido o background-image e background-size para .app-container.visible-ui */
+}
+
+/* Adiciona o estilo apenas quando a interface estiver visível */
+.app-container.visible-ui {
+  background-color: var(--dark-bg);
+  background-image: 
+    radial-gradient(circle at 50% 50%, rgba(171, 255, 0, 0.05) 0%, transparent 50%),
+    linear-gradient(to right, rgba(171, 255, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(171, 255, 0, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 30px 30px, 30px 30px;
+}
+
+/* Animação para o brilho de néon */
+@keyframes neon-flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    text-shadow: 
+      0 0 5px rgba(171, 255, 0, 0.7),
+      0 0 10px rgba(171, 255, 0, 0.5),
+      0 0 15px rgba(171, 255, 0, 0.3);
+  }
+  20%, 24%, 55% {
+    text-shadow: none;
+  }
+}
+
+.neon-text {
+  color: var(--lime-green);
+  animation: neon-flicker 5s infinite alternate;
+}
+
+/* Efeito de borda do cartão */
+.card-highlight {
+  position: relative;
+}
+
+.card-highlight::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(to right, transparent, var(--lime-green), transparent);
+}
+
+/* Efeito de brilho para ícones */
+.icon-glow {
+  filter: drop-shadow(0 0 3px var(--lime-green));
+  transition: filter 0.3s ease;
+}
+
+.icon-glow:hover {
+  filter: drop-shadow(0 0 5px var(--lime-green)) brightness(1.2);
+}
+
+/* Interface de grupos/tabs */
+.tabs-container {
+  display: flex;
+  border-bottom: 1px solid rgba(171, 255, 0, 0.2);
+  margin-bottom: 1rem;
+}
+
+.tab-item {
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  position: relative;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+}
+
+.tab-item.active {
+  color: var(--lime-green);
+}
+
+.tab-item.active::after {
+  content: "";
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: var(--lime-green);
+  box-shadow: 0 0 8px var (--lime-green);
+}
+
+/* Efeito para cards selecionados */
+.selected-card {
+  box-shadow: 0 0 0 2px var(--lime-green), 0 0 15px rgba(171, 255, 0, 0.5);
+  transform: translateY(-5px);
+}
+
+/* Slider personalizado */
+.custom-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(171, 255, 0, 0.2);
+  outline: none;
+}
+
+.custom-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--lime-green);
+  cursor: pointer;
+  box-shadow: 0 0 5px var(--lime-green);
+}
+
+/* Badge futurista */
+.cyber-badge {
+  background: linear-gradient(145deg, rgba(171, 255, 0, 0.1), rgba(171, 255, 0, 0.2));
+  border: 1px solid rgba(171, 255, 0, 0.3);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--lime-green);
+  font-weight: 500;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-badge::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: shine 3s infinite;
+}
+
+@keyframes shine {
+  0% { left: -100%; }
+  50%, 100% { left: 100%; }
+}
+
+/* Grid layout para cards de veículos */
+.vehicle-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Efeito de flutuação para cards em hover */
+.hover-float {
+  transition: transform 0.3s ease;
+}
+
+.hover-float:hover {
+  transform: translateY(-5px);
+}
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Modificando a classe garage-interface para não aplicar o background por padrão */
+.garage-interface {
+  /* Removido background-color fixo */
+  background-color: transparent; /* Alterado de var(--dark-bg) para transparent */
+  border-radius: 10px;
+  width: 85%; /* Aumentado de 80% para 85% */
+  max-width: 1300px; /* Aumentado para dar mais espaço ao conteúdo */
+  height: 85vh; /* Aumentado de 80vh para 85vh */
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.8), inset 0 0 2px var(--lime-green);
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(171, 255, 0, 0.2);
+  margin: auto; /* Adicionado para garantir centralização */
+}
+
+/* Adiciona o background apenas quando a interface estiver visível */
+.visible-ui .garage-interface {
+  background-color: var(--dark-bg);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: var(--dark-surface);
+  border-bottom: 1px solid rgba(171, 255, 0, 0.2);
+}
+
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--lime-green);
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0;
+  letter-spacing: 1px;
+  text-shadow: 0 0 5px rgba(171, 255, 0, 0.7);
+  position: relative;
+}
+
+.header h1::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 70%;
+  height: 2px;
+  background: var(--lime-green);
+  box-shadow: var(--glow-small);
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.close-button:hover {
+  color: var(--lime-green);
+  background-color: rgba(171, 255, 0, 0.1);
+  box-shadow: var(--glow-small);
+}
+
+.content {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 280px;
+  background-color: var(--dark-surface-2);
+  border-right: 1px solid rgba(171, 255, 0, 0.2);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-section {
+  margin-bottom: 1.5rem;
+}
+
+.filter-section h3 {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--lime-green-light);
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  position: relative;
+  padding-left: 15px;
+}
+
+.filter-section h3::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background-color: var(--lime-green);
+  box-shadow: var(--glow-small);
+  border-radius: 50%;
+}
+
+.search-box {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 0.6rem 2.5rem 0.6rem 0.75rem;
+  background-color: var(--dark-surface);
+  border: 1px solid rgba(171, 255, 0, 0.2);
+  border-radius: 4px;
+  color: var(--text-primary);
+  transition: all 0.3s ease;
+}
+
+.search-box input:focus {
+  border-color: var(--lime-green);
+  box-shadow: var(--glow-small);
+  outline: none;
+}
+
+.search-box::after {
+  content: '🔍';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-secondary);
+  pointer-events: none;
+}
+
+.vehicle-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vehicle-card {
+  background-color: var(--dark-surface);
+  border: 1px solid rgba(171, 255, 0, 0.15);
+  border-radius: 6px;
+  padding: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.vehicle-card:hover {
+  background-color: var(--dark-surface-2);
+  border-color: var(--lime-green);
+  box-shadow: var(--glow-small);
+  transform: translateY(-2px);
+}
+
+.vehicle-card.selected {
+  background-color: rgba(171, 255, 0, 0.1);
+  border-color: var(--lime-green);
+  box-shadow: var(--glow-small);
+}
+
+.vehicle-info {
+  flex: 1;
+}
+
+.vehicle-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  color: var(--lime-green-light);
+  margin: 0 0 0.25rem 0;
+}
+
+.vehicle-plate {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.vehicle-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-left: 0.5rem;
+}
+
+.status-out {
+  background-color: #ff4757;
+  box-shadow: 0 0 5px rgba(255, 71, 87, 0.7);
+}
+
+.status-in {
+  background-color: var(--lime-green);
+  box-shadow: var(--glow-small);
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow-y: auto;
+}
+
+.vehicle-details {
+  display: flex;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.vehicle-image {
+  width: 300px;
+  height: 200px;
+  background-color: var(--dark-surface);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(171, 255, 0, 0.2);
+}
+
+.vehicle-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 1rem;
+}
+
+.vehicle-image::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, rgba(171, 255, 0, 0.1), transparent);
+  pointer-events: none;
+}
+
+.vehicle-specs {
+  flex: 1;
+}
+
+.vehicle-title {
+  margin: 0 0 1rem 0;
+  font-family: 'Orbitron', sans-serif;
+  color: var(--lime-green);
+  font-size: 1.8rem;
+  text-shadow: var(--glow-small);
+  position: relative;
+  display: inline-block;
+}
+
+.vehicle-title::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 50%;
+  height: 2px;
+  background: var(--gradient-accent);
+  box-shadow: var(--glow-small);
+}
+
+.specs-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.spec-item {
+  background-color: var(--dark-surface);
+  border: 1px solid rgba(171, 255, 0, 0.15);
+  border-radius: 6px;
+  padding: 0.75rem;
+}
+
+.spec-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin: 0 0 0.25rem 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.spec-value {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.action-button {
+  padding: 0.75rem 1.5rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 1px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-transform: uppercase;
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(171, 255, 0, 0.1), transparent);
+  transform: rotate(45deg);
+  transition: all 0.6s ease;
+  opacity: 0;
+}
+
+.action-button:hover::before {
+  opacity: 1;
+  animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
+}
+
+.retrieve-button {
+  background: var(--gradient-primary);
+  border: none;
+  color: var(--dark-bg);
+  flex: 1;
+  justify-content: center;
+  box-shadow: var(--glow-small);
+}
+
+.retrieve-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-medium);
+}
+
+.store-button {
+  background-color: var(--dark-surface-2);
+  border: 1px solid var(--lime-green);
+  color: var(--lime-green);
+  flex: 1;
+  justify-content: center;
+}
+
+.store-button:hover {
+  background-color: rgba(171, 255, 0, 0.1);
+  box-shadow: var(--glow-small);
+}
+
+.garage-stats {
+  margin-top: 2rem;
+  background-color: var(--dark-surface);
+  border-radius: 8px;
+  padding: 1rem;
+  border: 1px solid rgba(171, 255, 0, 0.15);
+}
+
+.stats-title {
+  font-family: 'Orbitron', sans-serif;
+  color: var(--lime-green-light);
+  font-size: 1.2rem;
+  margin: 0 0 1rem 0;
+  position: relative;
+  padding-left: 1rem;
+}
+
+.stats-title::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 4px;
+  height: 18px;
+  background: var(--lime-green);
+  border-radius: 2px;
+  box-shadow: var(--glow-small);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.stat-card {
+  background-color: var(--dark-surface-2);
+  border-radius: 6px;
+  padding: 0.75rem;
+  text-align: center;
+  border: 1px solid rgba(171, 255, 0, 0.1);
+}
+
+.stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--lime-green);
+  margin: 0;
+  text-shadow: var(--glow-small);
+}
+
+.stat-label {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.8rem;
+  color: var (--text-secondary);
+  margin: 0.25rem 0 0 0;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .garage-interface {
+    width: 95%;
+  }
+  
+  .content {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    max-height: 200px;
+    border-right: none;
+    border-bottom: 1px solid rgba(171, 255, 0, 0.2);
+  }
+  
+  .vehicle-details {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .vehicle-image {
+    width: 100%;
+  }
+  
+  .specs-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animações e efeitos */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.cyber-lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  opacity: 0.15;
+}
+
+.cyber-line {
+  position: absolute;
+  background: var(--lime-green);
+  opacity: 0.3;
+}
+
+.cyber-line-h {
+  height: 1px;
+  width: 100%;
+  top: 20%;
+  animation: glitch-h 8s infinite linear;
+}
+
+.cyber-line-v {
+  width: 1px;
+  height: 100%;
+  left: 90%;
+  animation: glitch-v 15s infinite linear;
+}
+
+@keyframes glitch-h {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes glitch-v {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/* Tooltip personalizado */
+.tooltip {
+  position: relative;
+}
+
+.tooltip:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--dark-surface-2);
+  color: var(--text-primary);
+  padding: 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 10;
+  border: 1px solid var(--lime-green);
+  box-shadow: var(--glow-small);
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Estilo do card futurístico */
+.futuristic-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  position: relative;
+  border: 1px solid rgba(56, 255, 19, 0.1);
+}
+
+.futuristic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(56, 255, 19, 0.2);
+  border-color: rgba(56, 255, 19, 0.3);
+}
+
+.futuristic-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 4px;
+  width: 40%;
+  background: linear-gradient(90deg, transparent, var(--lime-green));
+}
+
+.futuristic-card::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 4px;
+  width: 40%;
+  background: linear-gradient(90deg, var(--lime-green), transparent);
+}
+
+/* Animação de fade in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  opacity: 0;
+  animation: fadeIn 0.5s forwards;
+}
+
+/* Efeito de escaneamento para input */
+@keyframes scanEffect {
+  0% {
+    box-shadow: 0 0 0 0 rgba(56, 255, 19, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(56, 255, 19, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 255, 19, 0);
+  }
+}
+
+.scan-effect:focus {
+  animation: scanEffect 1.5s infinite;
+}
+
+/* Estilo de texto tipo código */
+.code-text {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+}
+
+/* Borda cyber */
+.cyber-border {
+  position: relative;
+  z-index: 0;
+  border: 1px solid transparent;
+  background: var(--card-bg);
+}
+
+.cyber-border::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--lime-green), transparent, var(--lime-green));
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: -1;
+}
+
+/* Hexágono */
+.hexagon {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  background-color: var(--lime-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+/* Sombreamento com cor primária */
+.shadow-lime {
+  box-shadow: 0 4px 12px rgba(56, 255, 19, 0.3);
+}
+
+/* Fonte Orbitron */
+.font-orbitron {
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Drop shadow */
+.drop-shadow-lime {
+  filter: drop-shadow(0 0 5px rgba(56, 255, 19, 0.5));
+}
+
+/* Efeito de brilho neon */
+.neon-glow {
+  text-shadow: 0 0 5px rgba(56, 255, 19, 0.5), 0 0 10px rgba(56, 255, 19, 0.3);
+}
+
+/* Efeito de pulso */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(56, 255, 19, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(56, 255, 19, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 255, 19, 0);
+  }
+}
+
+.pulse-glow {
+  animation: pulse 2s infinite;
+}
+
+/* Botão neon */
+.neon-button:hover {
+  box-shadow: 0 0 5px rgba(145, 255, 19, 0.5), 0 0 10px rgba(172, 255, 19, 0.3);
+}
+
+/* Efeito de ação para botões de veículos */
+@keyframes buttonGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(165, 255, 19, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(56, 255, 19, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(56, 255, 19, 0);
+  }
+}
+
+.vehicle-action-btn:hover {
+  animation: buttonGlow 1.5s infinite;
+}

@@ -1,0 +1,476 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Rajdhani:wght@400;500;600;700&family=Orbitron:wght@400;500;700;900&display=swap');
+
+:root {
+  /* Esquema de cores futurista com verde limão */
+  --lime-green: #abff00;
+  --lime-green-light: #d2ff7f;
+  --lime-green-dark: #86cc00;
+  
+  --dark-bg: #0a0e12;
+  --dark-surface: #141a21;
+  --dark-surface-2: #1c242d;
+  
+  --text-primary: #e6e6e6;
+  --text-secondary: #a0a0a0;
+  
+  /* Gradientes */
+  --gradient-primary: linear-gradient(135deg, var(--lime-green), var(--lime-green-dark));
+  --gradient-accent: linear-gradient(135deg, var(--lime-green-light), var(--lime-green));
+  
+  /* Sombras */
+  --glow-small: 0 0 4px rgba(171, 255, 0, 0.5);
+  --glow-medium: 0 0 8px rgba(171, 255, 0, 0.6);
+  --glow-large: 0 0 15px rgba(171, 255, 0, 0.7);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos base */
+html, body {
+  font-family: 'Rajdhani', system-ui, sans-serif;
+  background-color: transparent;
+  color: var(--text-primary);
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  line-height: 1.5;
+  height: 100%;
+  width: 100%;
+}
+
+#root {
+  background-color: transparent;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Permite que cliques passem através quando a UI não está ativa */
+  background-image: 
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 30px 30px;
+  /* Adicionando display flex para centralizar o conteúdo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#root.visible-ui {
+  pointer-events: auto; /* Habilita interações quando a UI está visível */
+}
+
+/* Estilo para o fundo escuro da garagem - só fica visível quando necessário */
+body.garage-background-visible {
+  background-color: var(--dark-bg);
+}
+
+/* Efeito de brilho verde lima */
+.lime-glow {
+  box-shadow: 0 0 5px var(--lime-green), 0 0 10px var(--lime-green);
+  transition: all 0.3s ease;
+}
+
+.lime-glow:hover {
+  box-shadow: 0 0 10px var(--lime-green), 0 0 20px var(--lime-green), 0 0 30px var(--lime-green);
+}
+
+.text-lime-green {
+  color: var(--lime-green);
+}
+
+.bg-lime-green {
+  background-color: var(--lime-green);
+}
+
+.border-lime-green {
+  border-color: var(--lime-green);
+}
+
+.drop-shadow-lime {
+  filter: drop-shadow(0 0 5px rgba(171, 255, 0, 0.5));
+}
+
+/* Animação para os cards de veículos */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Animação pulsante para elementos de destaque */
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 5px rgba(171, 255, 0, 0.7);
+  }
+  50% {
+    opacity: 0.6;
+    box-shadow: 0 0 15px rgba(171, 255, 0, 0.3);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Estilo do spinner com cor verde lima */
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top: 4px solid var(--lime-green); 
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Efeito de vidro para fundos */
+.glass-effect {
+  backdrop-filter: blur(10px);
+  background-color: rgba(10, 14, 20, 0.8);
+  border: 1px solid rgba(171, 255, 0, 0.2);
+}
+
+/* Botões com efeito neon */
+.neon-button {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  background-color: var(--dark-bg);
+  border: 1px solid var(--lime-green);
+  color: var(--lime-green);
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  z-index: 1;
+}
+
+.neon-button::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  z-index: -1;
+  background: var(--lime-green);
+  filter: blur(15px);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.neon-button:hover::before {
+  opacity: 0.7;
+}
+
+.neon-button:hover {
+  background-color: rgba(171, 255, 0, 0.1);
+  box-shadow: 0 0 10px var(--lime-green);
+  transform: translateY(-2px);
+}
+
+.neon-button::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, rgba(171, 255, 0, 0.15), rgba(171, 255, 0, 0), rgba(171, 255, 0, 0.15));
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.neon-button:hover::after {
+  transform: translateX(100%);
+}
+
+/* Hexagono estilizado */
+.hexagon {
+  clip-path: polygon(50% 0%, 95% 25%, 95% 75%, 50% 100%, 5% 75%, 5% 25%);
+  background: var(--lime-green);
+}
+
+/* Card futurista */
+.futuristic-card {
+  @apply bg-card-bg border border-lime-green/30 rounded-lg overflow-hidden transition-all duration-300 hover:shadow-lime hover:border-lime-green/50;
+}
+
+.futuristic-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--lime-green), transparent);
+}
+
+.futuristic-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(171, 255, 0, 0.2);
+}
+
+/* Responsividade */
+@media (max-width: 640px) {
+  body {
+    font-size: 14px;
+  }
+  .vehicle-card img {
+    max-width: 100%;
+    height: auto;
+  }
+  .vehicle-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Background escuro para a aplicação */
+.bg-dark-bg {
+  background-color: var(--dark-bg);
+}
+
+.bg-card-bg {
+  background-color: var(--card-bg);
+}
+
+/* Efeito para texto futurista */
+.text-futuristic {
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+/* Divisor estilizado */
+.divider-lime {
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--lime-green), transparent);
+}
+
+/* Hover effects para elementos interativos */
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Animação de scan */
+@keyframes scan-line {
+  0% {
+    transform: translateY(-100%);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.scan-effect {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-effect::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 5px;
+  background: linear-gradient(90deg, transparent, var(--lime-green), transparent);
+  animation: scan-line 2s linear infinite;
+  opacity: 0.5;
+}
+
+/* Efeito cyberpunk */
+.cyber-border {
+  position: relative;
+  z-index: 0;
+  --b: 2px;   /* espessura da borda */
+  --c: var(--lime-green);   /* cor */
+  --w: 20px;  /* largura dos cantos */
+  
+  border: var(--b) solid transparent;
+  padding: 10px;
+  background-clip: padding-box;
+}
+
+.cyber-border::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  padding: 1px;
+  border-radius: 9999px;
+  background: linear-gradient(45deg, var(--lime-green), transparent, var(--lime-green));
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.cyber-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: var(--b);
+  background: linear-gradient(90deg, var(--c) 0%, transparent 30%, transparent 70%, var(--c) 100%),
+              linear-gradient(180deg, var(--c) 0%, transparent 30%, transparent 70%, var(--c) 100%);
+  background-clip: content-box;
+  z-index: -1;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--dark-surface);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(171, 255, 0, 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(171, 255, 0, 0.5);
+}
+
+/* Sobrescrita de classes Tailwind mais comuns */
+@layer components {
+  .panel {
+    @apply bg-[var(--dark-surface)] rounded-lg p-4 shadow-lg border border-opacity-20;
+    border-color: var(--lime-green);
+  }
+  
+  .card {
+    @apply bg-[var(--dark-surface-2)] rounded-md p-3 shadow-md transition-all duration-300;
+    border: 1px solid rgba(171, 255, 0, 0.15);
+  }
+  
+  .card:hover {
+    box-shadow: var(--glow-small);
+    border-color: rgba(171, 255, 0, 0.3);
+  }
+  
+  .heading-primary {
+    @apply text-xl font-bold;
+    color: var(--lime-green);
+    text-shadow: var(--glow-small);
+  }
+  
+  .heading-secondary {
+    @apply text-lg font-semibold;
+    color: var(--lime-green-light);
+  }
+  
+  .cyber-divider {
+    @apply h-[1px] w-full my-4;
+    background: linear-gradient(to right, transparent, var(--lime-green), transparent);
+  }
+  
+  .input-cyber {
+    @apply bg-[var(--dark-surface)] border rounded-md px-3 py-2 outline-none;
+    border-color: rgba(171, 255, 0, 0.2);
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+  }
+  
+  .input-cyber:focus {
+    border-color: var(--lime-green);
+    box-shadow: var(--glow-small);
+  }
+}
+
+/* Animação para carregamento de página */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Efeito para elementos paralelos ao passar o mouse */
+.hover-group:hover .hover-show {
+  opacity: 1;
+}
+
+.hover-show {
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+/* Fonte para títulos */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 0;
+}
+
+/* Estilos de botão */
+button, .btn {
+  background: var(--dark-surface-2);
+  border: 1px solid rgba(171, 255, 0, 0.3);
+  color: var(--text-primary);
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+button:hover, .btn:hover {
+  background: var(--dark-surface);
+  border-color: var(--lime-green);
+  box-shadow: var(--glow-small);
+}
+
+button.primary, .btn-primary {
+  background: var(--gradient-primary);
+  border: none;
+  color: var(--dark-bg);
+  font-weight: 700;
+}
+
+button.primary:hover, .btn-primary:hover {
+  box-shadow: var(--glow-medium);
+  transform: translateY(-1px);
+}
+
+/* Classe para centralizar o conteúdo da interface principal */
+.garage-interface {
+  display: flex;
+  justify-content: center; /* Centraliza horizontalmente */
+  align-items: center; /* Centraliza verticalmente */
+}
